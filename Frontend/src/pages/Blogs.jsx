@@ -7,7 +7,9 @@ import ClipLoader from "react-spinners/ClipLoader";
 const Blogs = () => {
   const [show, setShow] = useState(false);
   const API_URL = import.meta.env.VITE_BACKEND_API;
-  const { userdata, loading, error, refetch } = useFetch(`${API_URL}posts/getAllBlogs`);
+  const { userdata, loading, error, refetch } = useFetch(
+    `${API_URL}posts/getAllBlogs`
+  );
 
   if (loading) {
     return (
@@ -32,6 +34,7 @@ const Blogs = () => {
         {userdata.map((blog) => (
           <Card
             key={blog._id}
+            blog={blog}
             title={blog.title}
             subtitle={blog.subTitle}
             description={blog.description}
