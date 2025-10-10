@@ -1,14 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import useFetchSingle from "../hooks/useFetchSingle";
 import SingleCard from "../components/SingleCard";
 import useDelete from "../hooks/useDelete";
+import Edit from "../components/Edit";
 
 const Readmore = () => {
+  const [show, setShow] = useState(false);
   const { id } = useParams();
   const API_URL = import.meta.env.VITE_BACKEND_API;
-  const { data: blog, loading, error,} = useFetchSingle(`${API_URL}posts/getSingleBlog/${id}`);
+  const { data: blog, loading, error, refetch,} = useFetchSingle(`${API_URL}posts/getSingleBlog/${id}`);
   const { deleteBlog, deleting } = useDelete(`${API_URL}posts/deleteBlog/${id}`);
 
   if (loading) {
@@ -51,10 +53,14 @@ const Readmore = () => {
           {deleting ? "Deleting..." : "Delete"}
         </button>
 
-        <button className="ml-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-200">
+        <button
+          onClick={() => setShow(!show)}
+          className="ml-2 px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-200"
+        >
           Edit
         </button>
       </div>
+      {show && <Edit onClose={() => setShow(false)} onSuccess={refetch} />}
     </article>
   );
 };

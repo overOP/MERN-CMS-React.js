@@ -7,9 +7,7 @@ import ClipLoader from "react-spinners/ClipLoader";
 const Blogs = () => {
   const [show, setShow] = useState(false);
   const API_URL = import.meta.env.VITE_BACKEND_API;
-  const { userdata, loading, error, refetch } = useFetch(
-    `${API_URL}posts/getAllBlogs`
-  );
+  const { userdata, loading, error, refetch } = useFetch(`${API_URL}posts/getAllBlogs`);
 
   if (loading) {
     return (
